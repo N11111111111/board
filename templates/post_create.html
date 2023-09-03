@@ -1,0 +1,24 @@
+{% extends 'flatpages/default.html' %}
+
+
+{% block title %} Post {% endblock title %}
+
+{% block content %}
+
+<h3>Пост</h3>
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Добавить новое объявление</button>
+</form>
+
+
+    <br>
+
+
+
+{% endblock content %}
+
+
+

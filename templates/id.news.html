@@ -1,0 +1,88 @@
+{% extends 'flatpages/default.html' %}
+{% block title %} Статья {% endblock title %}
+{% load custom_filters %}
+
+{% block content %}
+
+
+<h1>Объявление</h1>
+<br>
+<br>
+<h2>Заголовок</h2>
+<p>{{ post.title|Censor }}</p>
+
+<h2>Дата публикации</h2>
+<p>{{ post.dateCreation|date:'d.m.Y h:m' }}</p>
+
+
+<h2>Текст</h2>
+<p>{{ post.text|Censor }}</p>
+
+
+
+  {% if request.user.is_authenticated %}
+        <p>
+            <h5>Вы можете подписаться на  категорию объявления:<h5>
+            {% for category in post.category.all %}
+                {% if not category in user_category %}
+
+ {{ category.name }} - <button><a href="{% url 'subscription' %}?category_id={{ category.id }}"><u>Подписаться</u></a> </button>-->
+
+                {% else %}
+                    <br>{{ category.name }}
+                {% endif %}
+            {% endfor %}
+            <h6>Ваши подписки:</h6>
+               <br>
+            {% for category in user_category %}
+                <br>{{ category.name }}
+            {% endfor %}
+        </p>
+
+        <br>
+        <button><a href="{% url 'respond_create' post.pk %}">Oставить свой комментарий</a></button>
+{% else %}
+
+<br>
+
+    <br>
+
+
+ <h5>Что бы оставить свой комментарий зарегистрируйтесть и подтвердите свой емайл адрес
+     <br>
+     <br>
+      <a href="/sign/login/"> Подтвердить свой емайл адрес </a>
+     <br>
+     <br>
+     или войдите в свой аккаунт автора:<h5>
+         <br>
+<a href="{% url 'entrance'%}">Вернуться в аккаунт автора</a>
+         <br>
+         {% endif %}
+         <br>
+         <br>
+                <div class="card-body">
+                    <!-- comments -->
+
+
+
+                     <h2>Всего {{ post.comments.count }}  отклика(ов) на объявление, одобрены:</h2>
+                    {% for comment in post.comments.all|get_queryset_2 %}
+                    <div class="comments" style="padding: 10px;">
+                        <p class="font-weight-bold">
+                            {{ comment.user_sender }}
+                            <span class="">
+                                {{ comment.dateCreation }}
+                           </span>
+                        </p>
+                        {{ comment.text | linebreaks }}
+                    </div>
+                      {% endfor %}
+
+                </div>
+
+
+                    </form>
+
+{% endblock content %}
+

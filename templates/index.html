@@ -1,0 +1,66 @@
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+
+
+{% if is_not_premium %}
+   <p>Пользователь  -  {{request.user.username}}, подтвердите свой емайл, что бы стать автором</p>
+<a href="sign/login/"> Хочу быть автором! </a>
+
+    <br>
+
+{% else %}
+
+<h2>Страница  пользователя - {{request.user.username}}</h2>
+    <br>
+    <p>Вы имеете статус: Автор</p>
+
+
+
+<!--<button> <a href="signup"> Регистрация </a></button>-->
+
+ <button> <a href="{% url 'logout'%}">Выйти из аккаунта</a></button>
+<br>
+<br>
+<button> <a href="{% url 'upgrade'%}">Удалить аккаунт и все свои публикации</a></button>
+<br>
+<br>
+<h6>Ваши текущие подписки:</h6>
+{% for category in user_category %}
+<br>
+{{ category.name }} - <button><a href="{% url 'unsubscribe'  %}?category_id={{ category.id }}"><u>Отписаться</u></a> </button>
+<br>
+
+{% endfor %}
+
+
+<h6>Комментарии :</h6>
+
+ <div class="card-body">
+     {% for post in posts %}
+
+
+      <h5>У Вас {{ post.comments.count }} отлик(ов) на Ваше объявление</h5>
+      <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>
+     {% endfor %}
+<br>
+<br>
+ <button><a href="{% url 'respond_list' %}">Посмотреть комментарии на Ваши объявления</a></button>
+
+
+ </div>
+
+
+<br>
+<br>
+{% endif %}
+<br>
+<br>
+ <button> <a href="{% url 'logout'%}">Выйти из аккаунта</a></button>
+
+
+{% endblock %}
+
+
+
+

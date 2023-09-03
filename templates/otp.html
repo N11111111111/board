@@ -1,0 +1,32 @@
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+<h2>Страница  пользователя - {{ request.session.username }}</h2>
+
+
+
+   <h5>Для завершения регистрации, введите код подтверждения,<br>
+            высланный на указанную Вами электронную почту:</h5><br>
+
+{% if  error_message %}
+      {{ error_message }}
+{% endif %}
+
+
+<form method="POST">
+{% csrf_token %}
+
+    <label for="otp">otp:</label>
+        <input class="'form-control" type="text" name="otp" required>
+<br>
+ <br>
+    <input class="btn btn-primary nt-3" type="submit" value="Ввести код">
+<!--<input type="submit" value="Ввести код">-->
+</form>
+
+ <br>
+    <button>
+    <a href="{% url 'logout'%}">Еще раз отправить код</a>
+    </button>
+
+    {% endblock %}

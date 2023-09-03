@@ -1,0 +1,58 @@
+
+{% extends 'flatpages/default.html' %}
+
+
+{% block content %}
+
+
+
+{% if  error_message %}
+      {{ error_message }}
+<button> <a href="/accounts/login/"> Регистрация через Google </a></button>
+{% endif %}
+
+
+
+
+<h2> Подтвердить емайл адрес </h2>
+<br>
+
+
+<form method="POST">
+
+{% csrf_token %}
+
+
+<table>
+<tr>
+    <label for ="username">username:</label>
+    <input class="'form-control" type="text" name="username" required>
+
+</tr>
+<br>
+  <br>
+<tr>
+    <label for ="password">пароль:</label>
+        <input class="'form-control" type="password" name="password" required>
+
+</tr>
+<tr>
+    <label for ="email">эл.адрес:</label>
+        <input class="'form-control" type="email" name="email" required>
+
+</tr>
+</table>
+<br>
+<br>
+<input type="submit" value="Войти">
+
+ <br>
+<br>
+</form>
+
+
+{% endblock %}
+
+
+
+
